@@ -1,6 +1,8 @@
 package com.yeono.madproject1
 
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -12,6 +14,7 @@ import com.yeono.madproject1.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var isBackClicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,5 +34,17 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    override fun onBackPressed() {
+        if (isBackClicked){
+            finish()
+        }else {
+            isBackClicked = true
+            Toast.makeText(this, "종료하시려면 더블 클릭하세요!", Toast.LENGTH_SHORT).show()
+        }
+        Handler().postDelayed({
+                              isBackClicked = false
+        }, 2000)
     }
 }
