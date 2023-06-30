@@ -5,12 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.yeono.madproject1.R
+import androidx.navigation.fragment.findNavController
 import com.yeono.madproject1.databinding.FragmentContactBinding
-
 
 class ContactFragment : Fragment() {
 
@@ -37,6 +40,12 @@ class ContactFragment : Fragment() {
         Log.d("dataList", dataList.toString())
 
         val adapter: ContactLVAdapter = ContactLVAdapter(dataList)
+        adapter.setItemClickListener(object: ContactLVAdapter.OnItemClickListener{
+            override fun onClick(position: Int) {
+                val action = ContactFragmentDirections.actionContactToDetail(position)
+                findNavController().navigate(action)
+            }
+        })
         recyclerView.adapter = adapter
 
         return root
