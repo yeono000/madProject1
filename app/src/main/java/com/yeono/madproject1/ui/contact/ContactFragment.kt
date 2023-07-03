@@ -1,7 +1,10 @@
 package com.yeono.madproject1.ui.contact
 
-import android.annotation.SuppressLint
+import android.R
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -13,13 +16,15 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation.findNavController
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.yeono.madproject1.R
-import androidx.navigation.fragment.findNavController
+import com.yeono.madproject1.MainActivity
 import com.yeono.madproject1.databinding.FragmentContactBinding
+import com.yeono.madproject1.ui.home.HomeFragment
+
 
 class ContactFragment : Fragment() {
 
@@ -61,17 +66,24 @@ class ContactFragment : Fragment() {
         _binding = FragmentContactBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val recyclerView: RecyclerView = binding.contactRV
-        //fragment의 context를 가져옴
+
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), 1))
 
-        Log.d("dataList", dataList.toString())
-
         val adapter: ContactLVAdapter = ContactLVAdapter(dataList)
+        val mainActivity = activity as MainActivity
         adapter.setItemClickListener(object: ContactLVAdapter.OnItemClickListener{
             override fun onClick(position: Int) {
-                val action = ContactFragmentDirections.actionContactToDetail(position)
+                val action = ContactFragmentDirections.actionNavigationContactToContactDetailFragment(dataList[position])
                 findNavController().navigate(action)
+//                  mainActivity.switchFragment(ContactDetailFragment())
+//                fragmentManager.beginTransaction()
+//                    .replace(container!!.id, ContactFragment::class.java, Bundle().apply {
+//                        putParcelable("contactData", dataList[position])
+//                    })
+//                    .setReorderingAllowed(true)
+//                    .addToBackStack(null)
+//                    .commit()
             }
         })
         recyclerView.adapter = adapter
@@ -87,7 +99,8 @@ class ContactFragment : Fragment() {
     private fun getContacts() {
         val projection = arrayOf(
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-            ContactsContract.CommonDataKinds.Phone.NUMBER
+            ContactsContract.CommonDataKinds.Phone.NUMBER,
+            ContactsContract.CommonDataKinds.Phone.PHOTO_URI
         )
         val selection = ContactsContract.CommonDataKinds.Phone.TYPE + " = " + ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE
 
@@ -98,15 +111,17 @@ class ContactFragment : Fragment() {
             null,
             null
         )
-        Log.d("cursor", cursor.toString())
         cursor?.use { cursor ->
             val nameColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
             val phoneNumberColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+            val photoUriColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI)
 
             while (cursor.moveToNext()) {
                 val name = cursor.getString(nameColumnIndex)
                 val phoneNumber = cursor.getString(phoneNumberColumnIndex)
-                dataList.add(ContactDataModel(name, getFormattedPhoneNumber(phoneNumber)))
+                var photoUriString = cursor.getString(photoUriColumnIndex)
+                var photo = if (!photoUriString.isNullOrEmpty()) getBitmapFromUri(Uri.parse(photoUriString)) else null
+                dataList.add(ContactDataModel(name, getFormattedPhoneNumber(phoneNumber), photo))
             }
         }
     }
@@ -125,6 +140,11 @@ class ContactFragment : Fragment() {
         }
 
         return formattedNumber.toString()
+    }
+
+    private fun getBitmapFromUri(uri: Uri): Bitmap? {
+        val inputStream = requireContext().contentResolver.openInputStream(uri)
+        return BitmapFactory.decodeStream(inputStream)
     }
 
     override fun onRequestPermissionsResult(

@@ -7,6 +7,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -35,12 +36,51 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        navView.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.navigation_contact -> {
+                    navController.popBackStack(
+                        navController.graph.startDestinationId,
+                        true
+                    )
+                    navController.navigate(R.id.navigation_contact)
+                }
+                R.id.navigation_dashboard -> {
+                    navController.popBackStack(
+                        navController.graph.startDestinationId,
+                        true
+                    )
+                    navController.navigate(R.id.navigation_dashboard)
+
+                }
+                R.id.navigation_notifications -> {
+                    navController.popBackStack(
+                        navController.graph.startDestinationId,
+                        true
+                    )
+                    navController.navigate(R.id.navigation_notifications)
+                }
+            }
+
+            true
+        }
+
     }
     fun switchFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.nav_host_fragment_activity_main, fragment)
+            .setReorderingAllowed(true)
+            .addToBackStack(null)
             .commit()
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+
 
 //    override fun onBackPressed() {
 //        if (isBackClicked){
