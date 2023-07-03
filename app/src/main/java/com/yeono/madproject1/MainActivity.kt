@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_contact, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_contact, R.id.navigation_dashboard, R.id.navigation_game
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -50,12 +50,12 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.navigation_dashboard)
 
                 }
-                R.id.navigation_notifications -> {
+                R.id.navigation_game -> {
                     navController.popBackStack(
                         navController.graph.startDestinationId,
                         true
                     )
-                    navController.navigate(R.id.navigation_notifications)
+                    navController.navigate(R.id.navigation_game)
                 }
             }
             true
