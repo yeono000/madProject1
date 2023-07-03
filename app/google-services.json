@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "684873744475",
+    "project_id": "madproject1-bd9b8",
+    "storage_bucket": "madproject1-bd9b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684873744475:android:0f5903cca3c16fa8cabf7e",
+        "android_client_info": {
+          "package_name": "com.yeono.madProject1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684873744475-t9ogjoq1qpebtfegu79s7gvm4rfhvcrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOZtKpaM-y2K8Oh5FKy76_9YVv-Zv7TYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "684873744475-t9ogjoq1qpebtfegu79s7gvm4rfhvcrt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684873744475:android:ce100fab70fa8897cabf7e",
+        "android_client_info": {
+          "package_name": "com.yeono.madproject1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684873744475-t9ogjoq1qpebtfegu79s7gvm4rfhvcrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOZtKpaM-y2K8Oh5FKy76_9YVv-Zv7TYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "684873744475-t9ogjoq1qpebtfegu79s7gvm4rfhvcrt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.yeono.madproject1.R
 import com.yeono.madproject1.databinding.ItemContactBinding
 
 class ContactLVAdapter(private val data:List<ContactDataModel>)
@@ -23,6 +22,9 @@ class ContactLVAdapter(private val data:List<ContactDataModel>)
         fun bind(itemData : ContactDataModel){
             binding.nameText.text = itemData.name
             binding.numberText.text = itemData.number
+            if (itemData.photoBitmap != null) {
+                binding.profileImage.setImageBitmap(itemData.photoBitmap)
+            }
         }
         init {
             binding.detailButton.setOnClickListener {
