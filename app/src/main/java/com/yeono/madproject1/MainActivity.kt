@@ -2,6 +2,7 @@ package com.yeono.madproject1
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.yeono.madproject1.databinding.ActivityMainBinding
+import com.yeono.madproject1.ui.game.PlayerDataModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,6 +34,9 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val pl = PlayerDataModel("asd", "asdf", 2)
+        Log.d("player", pl.toString())
 
         navView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {

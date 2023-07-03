@@ -8,10 +8,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.yeono.madproject1.databinding.FragmentGameBinding
+import com.yeono.madproject1.databinding.FragmentPlayBinding
+import com.yeono.madproject1.databinding.FragmentPlayerBinding
+import com.yeono.madproject1.ui.game.PlayerDataModel
 
-class GameFragment : Fragment() {
-
-    private var _binding: FragmentGameBinding? = null
+class GamePlayFragment() : Fragment() {
+    private var _binding: FragmentPlayBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,7 +22,7 @@ class GameFragment : Fragment() {
     ): View {
 //        val notificationsViewModel =
 //            ViewModelProvider(this).get(GameViewModel::class.java)
-        _binding = FragmentGameBinding.inflate(inflater, container, false)
+        _binding = FragmentPlayBinding.inflate(inflater, container, false)
         val root: View = binding.root
         return root
     }

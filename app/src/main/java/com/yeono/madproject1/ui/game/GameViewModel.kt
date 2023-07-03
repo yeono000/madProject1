@@ -1,4 +1,4 @@
-package com.yeono.madproject1.ui.notifications
+package com.yeono.madproject1.ui.game
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
