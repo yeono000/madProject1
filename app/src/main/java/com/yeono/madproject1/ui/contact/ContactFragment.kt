@@ -42,18 +42,15 @@ class ContactFragment : Fragment() {
                     android.Manifest.permission.READ_CONTACTS
                 ) != PackageManager.PERMISSION_GRANTED
             )  {
-                // 권한이 없으면 요청
                 ActivityCompat.requestPermissions(
                     requireActivity(),
                     arrayOf(android.Manifest.permission.READ_CONTACTS),
                     READ_CONTACTS_REQUEST
                 )
             } else {
-                // 권한이 있으면 연락처 정보 가져오기
                 getContacts()
             }
         } else {
-            // M 버전 이전은 권한이 자동으로 부여되므로 연락처 정보 가져오기
             getContacts()
         }
     }
@@ -76,14 +73,6 @@ class ContactFragment : Fragment() {
             override fun onClick(position: Int) {
                 val action = ContactFragmentDirections.actionNavigationContactToContactDetailFragment(dataList[position])
                 findNavController().navigate(action)
-//                  mainActivity.switchFragment(ContactDetailFragment())
-//                fragmentManager.beginTransaction()
-//                    .replace(container!!.id, ContactFragment::class.java, Bundle().apply {
-//                        putParcelable("contactData", dataList[position])
-//                    })
-//                    .setReorderingAllowed(true)
-//                    .addToBackStack(null)
-//                    .commit()
             }
         })
         recyclerView.adapter = adapter
@@ -127,10 +116,8 @@ class ContactFragment : Fragment() {
     }
 
     private fun getFormattedPhoneNumber(phoneNumber: String): String {
-        // 숫자 이외의 문자 제거
         val digitsOnly = phoneNumber.replace(Regex("[^\\d]"), "")
 
-        // 형식에 맞게 포맷팅
         val formattedNumber = StringBuilder()
         for (i in digitsOnly.indices) {
             formattedNumber.append(digitsOnly[i])
@@ -155,10 +142,8 @@ class ContactFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == READ_CONTACTS_REQUEST) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // 권한이 허용되면 연락처 정보 가져오기
                 getContacts()
             } else {
-                // 권한이 거부되었을 때 처리할 작업
                 Toast.makeText(requireContext(), "연락처 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
             }
         }

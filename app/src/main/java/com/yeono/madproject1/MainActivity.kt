@@ -16,8 +16,6 @@ import com.yeono.madproject1.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var isBackClicked = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,8 +25,6 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_contact, R.id.navigation_dashboard, R.id.navigation_notifications
@@ -62,10 +58,8 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.navigation_notifications)
                 }
             }
-
             true
         }
-
     }
     fun switchFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
@@ -79,18 +73,4 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
-
-
-
-//    override fun onBackPressed() {
-//        if (isBackClicked){
-//            finish()
-//        }else {
-//            isBackClicked = true
-//            Toast.makeText(this, "종료하시려면 더블 클릭하세요!", Toast.LENGTH_SHORT).show()
-//        }
-//        Handler().postDelayed({
-//                              isBackClicked = false
-//        }, 2000)
-//    }
 }
