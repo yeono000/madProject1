@@ -40,6 +40,8 @@ class Friends : Fragment() {
         /*if(imageList != null){
             Log.d("image", imageData.toString())
         }*/
+        //Log.d("image", imageData.toString())
+        Log.d("img", "Size: ${imageList.size}")
         var rv = binding.recyclerView2
         rv.layoutManager = LinearLayoutManager(requireContext())
         rv.addItemDecoration(DividerItemDecoration(requireContext(), 1))
