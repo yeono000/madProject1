@@ -4,67 +4,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.DashboardFragment">
-
-    <TextView
-        android:id="@+id/text_dashboard"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.397" />
-
-    <!-- <LinearLayout
+        android:orientation="vertical">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        app:layout_constraintTop_toBottomOf="@+id/text_dashboard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Friends" />
 
-        <ImageView
-            android:id="@+id/btsImage1"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/bts_1"
-            android:layout_weight="1"/>
-
-        <ImageView
-            android:id="@+id/btsImage2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/bts_2"
-            android:layout_weight="2"/>
-
-        <ImageView
-            android:id="@+id/btsImage3"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_weight="3"
-            android:src="@drawable/bts_3" />
-
-    </LinearLayout> -->
-
-
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    </LinearLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="392dp"
-        android:layout_height="6dp"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/extra"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="314dp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!-- <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            app:layout_constraintTop_toBottomOf="@+id/text_dashboard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/btsImage1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/bts_1"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/btsImage2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/bts_2"
+                android:layout_weight="2"/>
+
+            <ImageView
+                android:id="@+id/btsImage3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="3"
+                android:src="@drawable/bts_3" />
+
+        </LinearLayout> -->

@@ -40,7 +40,13 @@ class LoginActivity : AppCompatActivity() {
             }
         }
         else{
+            Toast.makeText(
+                baseContext,
+                "로그인 되었습니다.",
+                Toast.LENGTH_SHORT,
+            ).show()
             updateUI(currentUser)
+
         }
     }
     fun updateUI(user : FirebaseUser?){
