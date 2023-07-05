@@ -51,7 +51,7 @@ class PlayModel : ViewModel() {
 
     fun setPlayerIds(list: List<String>){
         _playerIds.value = list.toTypedArray()
-        _numberOfPlayer.value = list.size
+        _numberOfPlayer.value = playerIds.value!!.size
     }
 
     fun setPlayerNames(list: List<String>){

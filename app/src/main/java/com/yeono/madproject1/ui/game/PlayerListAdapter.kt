@@ -65,15 +65,11 @@ private val context: Context) : BaseAdapter() {
                     binding.arrow.visibility = View.VISIBLE
                     binding.card.setBackgroundResource(R.drawable.shadow)
                     binding.cardNew.setBackgroundResource(R.drawable.shadow)
-                    if (playerModel.newCard.value == 7) {
-                        if (playerModel.card.value == 6 || playerModel.card.value == 5) {
-                            playerModel.setSelectedCard(1)
-                        }
+                    if (playerModel.newCard.value == 7 && playerModel.card.value == 6 || playerModel.card.value == 5) {
+                        playerModel.setSelectedCard(1)
                     }
-                    else if (playerModel.card.value == 7) {
-                        if (playerModel.newCard.value == 6 || playerModel.newCard.value == 5) {
-                            playerModel.setSelectedCard(0)
-                        }
+                    else if (playerModel.card.value == 7 && playerModel.newCard.value == 6 || playerModel.newCard.value == 5) {
+                        playerModel.setSelectedCard(0)
                     }
                     else {
                         binding.card.setOnClickListener {

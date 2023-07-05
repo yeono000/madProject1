@@ -23,30 +23,39 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var db : FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         val receivedValue = intent.getStringExtra("uid")
         val userViewModel: UserModel by viewModels()
-        db = Firebase.firestore
-        db.collection("users")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    val objects = document.toObject(UserDto::class.java)
-                    if(objects.uid == userViewModel.uid){
-                        val objects = document.toObject(UserDto::class.java)
-                        userViewModel.setUserName(objects.name?:"")
-                    }
-                    userViewModel.addUser(objects)
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w("db", "Error getting documents.", exception)
-            }
-
         if (receivedValue != null){
             userViewModel.setUserId(receivedValue)
             Log.d("user", "receive"+userViewModel.uid)
         }
+        db = Firebase.firestore
+        db.collection("users")
+            .get()
+            .addOnSuccessListener { result ->
+                Log.d("db", "uid"+userViewModel.uid.toString())
+                var i = 0
+                for (document in result) {
+                    val objects = document.toObject(UserDto::class.java)
+                    if(objects.uid == userViewModel.uid){
+                        Log.d("db", objects.uid.toString()?:"")
+                        val objects = document.toObject(UserDto::class.java)
+                        userViewModel.setUserName(objects.name?:"")
+                        userViewModel.addUser(objects)
+                        userViewModel.addPlayer(i)
+                    }
+                    else{userViewModel.addUser(objects)}
+                    i += 1
+                }
+                Log.d("db", userViewModel.userList.value!!.size.toString())
+                Log.d("db", userViewModel.friendList.value!!.size.toString())
+                Log.d("db", userViewModel.playerList.value!!.size.toString())
+            }
+            .addOnFailureListener { exception ->
+                Log.w("db", "Error getting documents.", exception)
+            }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

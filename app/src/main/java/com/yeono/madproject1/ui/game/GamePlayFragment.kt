@@ -24,13 +24,13 @@ class GamePlayFragment() : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         playData = ViewModelProvider(this).get(PlayModel::class.java)
-        playData.setPlayerIds(userViewModel.userList.value!!.map{
+        playData.setPlayerIds(userViewModel.playerList.value!!.map{
             user -> user.uid!!
         })
-        playData.setPlayerNames(userViewModel.userList.value!!.map{
+        playData.setPlayerNames(userViewModel.playerList.value!!.map{
                 user -> user.name?:"player"
         })
-        playData.setCards(shuffleArray(arrayOf(1,1,1,1,1,2,2,3,3,4,4,5,5,6,7,8)))
+//        playData.setCards(shuffleArray(arrayOf(1,1,1,1,1,2,2,3,3,4,4,5,5,6,7,8)))
         playerDataList = mutableListOf<PlayerModel>()
         if(playData != null){
             for(i in 0 until playData.numberOfPlayer.value!!){

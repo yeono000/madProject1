@@ -37,6 +37,8 @@ class UserModel : ViewModel() {
         _friendList.value!!.add(id)
     }
     fun addPlayer(id: Int) {
-        _playerList.value!!.add(_userList.value!!.get(id))
+        if(!(_userList.value!!.get(id) in _playerList.value!!)){
+            _playerList.value!!.add(_userList.value!!.get(id))
+        }
     }
 }
