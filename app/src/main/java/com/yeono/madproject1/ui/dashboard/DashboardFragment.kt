@@ -1,20 +1,17 @@
 package com.yeono.madproject1.ui.dashboard
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.yeono.madproject1.Bts1Activity
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.yeono.madproject1.R
 import com.yeono.madproject1.RVAdapter
 import com.yeono.madproject1.databinding.FragmentDashboardBinding
@@ -27,24 +24,31 @@ class DashboardFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private var imageFriendList: MutableList<Int> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        super.onCreate(savedInstanceState)
         val dashboardViewModel =
             ViewModelProvider(this).get(DashboardViewModel::class.java)
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = "Hello World"
-        }
 
-        //recyclerView = findViewById(R.id.recyclerView)
-        //imageAdapter = ImageAdapter(imageList)
+
+        binding.button.setOnClickListener {
+            // 버튼이 클릭되었을 때 네비게이션을 이용해 fragment_friends로 전환합니다.
+            //imageFriendList.add(imageList[0])
+            //imageFriendList.add(R.drawable.bts_5)
+            //imageFriendList.add(R.drawable.bts_6)
+            val data = RealFriendViewModel(imageFriendList)
+            val action = DashboardFragmentDirections.actionNavigationDashboardToFriends(data)
+           // val action = DashboardFragmentDirections.actionNavigationDashboardToDashboardDetailFragment(data)
+            findNavController().navigate(action)
+        }
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -63,23 +67,67 @@ class DashboardFragment : Fragment() {
             imageList.add(R.drawable.member_7)
             imageList.add(R.drawable.member_8)
             imageList.add(R.drawable.member_9)
+            Log.d("imageList", "!!!")
 
-            /*val adapter = RVAdapter(imageList, object : AdapterView.OnItemClickListener {
-                override fun onItemClick(imageResId: Int) {
-                    val intent = Intent(requireContext(), Bts1Activity::class.java)
-                    intent.putExtra("imageResId", imageResId)
-                    startActivity(intent)
+                /*val adapter = RVAdapter(imageList, object : AdapterView.OnItemClickListener {
+                    override fun onItemClick(imageResId: Int) {
+                        val intent = Intent(requireContext(), Bts1Activity::class.java)
+                        intent.putExtra("imageResId", imageResId)
+                        startActivity(intent)
+                    }
+                })
+
+                binding.recyclerView.apply {
+                    layoutManager = LinearLayoutManager(requireContext())
+                    this.adapter = adapter
+                }*/
+
+            val adapter = RVAdapter(imageList)
+            this.adapter = adapter
+            adapter.setItemClickListener(object: RVAdapter.OnItemClickListener{
+                override fun onClick(position: Int) {
+                    Log.d("position", position.toString())
+                    imageFriendList.add(imageList[position])
+                    val data = ImageDataModel(position.toString(), imageList[position])
+                    val action = DashboardFragmentDirections.actionNavigationDashboardToDashboardDetailFragment(data)
+
+                    findNavController().navigate(action)
                 }
             })
 
-            binding.recyclerView.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                this.adapter = adapter
-            }*/
-            val adapter = RVAdapter(imageList)
-            this.adapter = adapter
             //adapter = RVAdapter()
         }
+
+        binding.save.setOnClickListener {
+            val database = Firebase.database
+            val myRef = database.getReference("message")
+
+            myRef.push().setValue("Hello, World!")
+        }
+
+        /*var auth = Firebase.auth
+
+
+        binding.button.setOnClickListener {
+
+            auth.signInAnonymously()
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+
+
+                        val user = auth.currentUser
+
+                        Log.d("MainActivity", user!!.uid)
+
+                    } else {
+                        // If sign in fails, display a message to the user.
+
+                        Toast.makeText(requireContext(), "Authentication failed.", Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+
+        }*/
 
         /*val imageView: ImageView = binding.btsImage1
         imageView.setImageResource(R.drawable.bts_1)*/

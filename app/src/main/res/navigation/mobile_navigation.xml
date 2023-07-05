@@ -13,7 +13,6 @@
         <action
             android:id="@+id/action_navigation_contact_to_contact_detail_fragment"
             app:destination="@id/contact_detail_fragment" >
-
             <argument
                 android:name="contactData"
                 app:argType=".ui.contact.ContactDataModel" />
@@ -27,14 +26,44 @@
         tools:layout="@layout/fragment_detail_contact" />
 
     <fragment
+        android:id="@+id/dashboard_detail_fragment"
+        android:name="com.yeono.madproject1.ui.dashboard.DashboardDetailFragment"
+        android:label="Dashboard Detail"
+        tools:layout="@layout/fragment_dashboard_detail" >
+        <action
+            android:id="@+id/action_dashboard_detail_fragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.yeono.madproject1.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_dashboard_detail_fragment"
+            app:destination="@id/dashboard_detail_fragment" >
+            <argument
+                android:name="imageId"
+                app:argType=".ui.dashboard.ImageDataModel" />
+        </action>
+        <action
+            android:id="@+id/action_navigation_dashboard_to_friends"
+            app:destination="@id/friends" >
+            <argument
+                android:name="FrId"
+                app:argType=".ui.dashboard.RealFriendViewModel" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_game"
         android:name="com.yeono.madproject1.ui.game.GameFragment"
         android:label="Game"
         tools:layout="@layout/fragment_game" />
+    <fragment
+        android:id="@+id/friends"
+        android:name="com.yeono.madproject1.ui.dashboard.Friends"
+        android:label="fragment_friends"
+        tools:layout="@layout/fragment_friends" />
 </navigation>

@@ -4,10 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.yeono.madproject1.databinding.FragmentDashboardBinding
+import com.yeono.madproject1.databinding.FragmentDashboardDetailBinding
 import com.yeono.madproject1.databinding.ItemContactBinding
 
 class ContactLVAdapter(private val data:List<ContactDataModel>)
     : RecyclerView.Adapter<ContactLVAdapter.ViewHolder>() {
+
     interface OnItemClickListener {
         fun onClick(position: Int)
     }
