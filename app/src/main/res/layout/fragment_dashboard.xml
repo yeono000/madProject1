@@ -16,13 +16,19 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your Friends" />
+            android:text="Friends" />
 
         <Button
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="Setting"
+            android:layout_marginLeft="10dp"/>
+        <Button
+            android:id="@+id/My_Info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MyInfo"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
