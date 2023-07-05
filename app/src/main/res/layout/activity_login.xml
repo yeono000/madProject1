@@ -14,26 +14,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <EditText
-            android:id="@+id/emailArea"
-            android:hint="Email"
+            android:hint="userName"
+            android:id="@+id/user_name_area"
             android:layout_gravity="center"
             android:layout_width="250dp"
             android:layout_height="wrap_content"></EditText>
-        <EditText
-            android:hint="Password"
-            android:id="@+id/passwordArea"
-            android:layout_gravity="center"
-            android:layout_width="250dp"
-            android:inputType="textPassword"
-            android:layout_height="wrap_content"></EditText>
         <Button
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center"
-            android:id="@+id/join_button"
-            android:text="join"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Button>
-        <Button
+            android:layout_marginTop="20dp"
             android:layout_gravity="center"
             android:id="@+id/login_button"
             android:text="login"

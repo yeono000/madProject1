@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#333333"
+    android:orientation="vertical"
+    android:padding="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#333333"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/player_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@{viewModel.getText}"
+            android:textColor="@color/white" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/card"
+                android:layout_width="90dp"
+                android:layout_height="110dp"
+                android:background="@drawable/shadow_red"
+                android:src="@drawable/card_image">
+            </ImageView>
+            <ImageView
+                android:id="@+id/cardNew"
+                android:layout_marginLeft="5dp"
+                android:layout_width="90dp"
+                android:background="@drawable/shadow_red"
+                android:layout_height="110dp"
+                android:src="@drawable/card_image">
+            </ImageView>
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_height="110dp">
+            </ImageView>
+            <ImageView
+                android:id="@+id/arrow"
+                android:scaleType="center"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/baseline_double_arrow_24"
+                android:layout_width="50dp"
+                android:layout_height="110dp">
+            </ImageView>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.yeono.madproject1.ui.game.PlayerModel" />
+    </data>
+</layout>

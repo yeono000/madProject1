@@ -8,11 +8,17 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.yeono.madproject1.databinding.FragmentGameBinding
+import java.util.Random
 
 class GameFragment : Fragment() {
 
     private var _binding: FragmentGameBinding? = null
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

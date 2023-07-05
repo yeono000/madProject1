@@ -6,75 +6,73 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.yeono.madproject1.databinding.ActivityLoginBinding
-import com.yeono.madproject1.databinding.ActivityMainBinding
+import com.yeono.madproject1.user.UserDto
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var db : FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_login)
         supportActionBar?.hide()
-
         auth = Firebase.auth
-        var currentUser = auth.currentUser
+//        auth.signOut()
+        db = Firebase.firestore
+        val currentUser = auth.currentUser
+        val nameText = findViewById<EditText>(R.id.user_name_area)
         if (currentUser == null){
-            val email = binding.emailArea.text.toString()
-            val password = binding.passwordArea.text.toString()
-            binding.joinButton.setOnClickListener{
-                auth.createUserWithEmailAndPassword(email, password)
+            val loginButton = findViewById<Button>(R.id.login_button)
+            loginButton.setOnClickListener{
+                auth.signInAnonymously()
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("join", "createUserWithEmail:success")
                             val user = auth.currentUser
-                            updateUI(user)
+                            Toast.makeText(
+                                baseContext,
+                                "Authentication success.",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                            var userDto = UserDto()
+                            userDto.uid = auth?.currentUser?.uid
+                            userDto.name = nameText.text.toString()
+                            db.collection("users")
+                                .add(userDto)
+                                .addOnSuccessListener { documentReference ->
+                                    Log.d("db", "DocumentSnapshot added with ID: ${nameText}")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.w("db", "Error adding document", e)
+                                }
+                            updateUI(user, nameText.text.toString())
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("join", "createUserWithEmail:failure", task.exception)
                             Toast.makeText(
                                 baseContext,
                                 "Authentication failed.",
                                 Toast.LENGTH_SHORT,
                             ).show()
-                        }
-                    }
-            }
-            binding.loginButton.setOnClickListener{
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("login", "signInWithEmail:success")
-                            val user = auth.currentUser
-                            updateUI(user)
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("login", "signInWithEmail:failure", task.exception)
-                            Toast.makeText(
-                                baseContext,
-                                "Authentication failed.",
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                            updateUI(null, null)
                         }
                     }
             }
         }
         else{
-            updateUI(currentUser)
+            updateUI(currentUser, nameText.text.toString())
         }
     }
-    fun updateUI(user : FirebaseUser?){
-        Log.d("user", user.toString())
+    fun updateUI(user : FirebaseUser?, nameText: String?){
         Handler().postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("uid", user?.uid)
+            intent.putExtra("name", nameText)
+            startActivity(intent)
             finish()
         }, 0)
     }
