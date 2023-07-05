@@ -7,6 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="green">#3CB371</color>
     <color name="green_700">#0C964A</color>
+    <color name="green_table">#43725D</color>
+    <color name="green_player">#325130</color>
+    <color name="yellow">#F2BB66</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

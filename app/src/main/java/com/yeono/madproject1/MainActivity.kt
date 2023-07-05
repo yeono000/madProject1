@@ -1,24 +1,52 @@
 package com.yeono.madproject1
 
 import android.os.Bundle
-import android.os.Handler
-import android.widget.Toast
+import android.util.Log
+import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.yeono.madproject1.databinding.ActivityMainBinding
+import com.yeono.madproject1.user.UserDto
+import com.yeono.madproject1.user.UserModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var db : FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val receivedValue = intent.getStringExtra("uid")
+        val userViewModel: UserModel by viewModels()
+        db = Firebase.firestore
+        db.collection("users")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val objects = document.toObject(UserDto::class.java)
+                    if(objects.uid == userViewModel.uid){
+                        val objects = document.toObject(UserDto::class.java)
+                        userViewModel.setUserName(objects.name?:"")
+                    }
+                    userViewModel.addUser(objects)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("db", "Error getting documents.", exception)
+            }
 
+        if (receivedValue != null){
+            userViewModel.setUserId(receivedValue)
+            Log.d("user", "receive"+userViewModel.uid)
+        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -27,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_contact, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_contact, R.id.navigation_dashboard, R.id.navigation_game
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -50,12 +78,12 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.navigation_dashboard)
 
                 }
-                R.id.navigation_notifications -> {
+                R.id.navigation_game -> {
                     navController.popBackStack(
                         navController.graph.startDestinationId,
                         true
                     )
-                    navController.navigate(R.id.navigation_notifications)
+                    navController.navigate(R.id.navigation_game)
                 }
             }
             true

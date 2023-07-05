@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="8dp" /> <!-- 조절 가능: 둥근 사각형의 라운드 반지름 -->
+    <solid android:color="#F2BB66" /> <!-- 조절 가능: 그림자의 색상, 여기서는 흰색(#FFFFFF) 사용 -->
+</shape>
